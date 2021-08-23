@@ -1,7 +1,7 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST,GET,OPTIONS");
-  header('Access-Control-Allow-Credentials: true');
+header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Allow-Headers: Origin,Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With,Access-Control-Allow-Credentials');
 
 //retrieve request headers
@@ -17,9 +17,9 @@ $is_json_string_request = json_decode(file_get_contents("php://input"));
 
 if (json_last_error() === JSON_ERROR_NONE) {
   //request is a json string request
-
   $is_json_request = true;
 
+  //request validation
   if (!isset($is_json_string_request->method) || empty($is_json_string_request->method)) {
     echo json_encode(array("message" => "PROXY ACESS DENIED!, Request method not specified"));
     exit();
@@ -37,21 +37,24 @@ if (json_last_error() === JSON_ERROR_NONE) {
 
   $url = $is_json_string_request->cors;
   $method = $is_json_string_request->method;
-
 } else {
   //request is a raw request
   $is_raw_request = true;
+
+  //request validation
   if (!isset($_REQUEST['method']) || empty($_REQUEST['method'])) {
     echo json_encode(array("message" => "PROXY ACESS DENIED!, Request method not specified"));
     exit();
   }
-  if (!isset($_REQUEST['cors']) || empty($_REQUEST['cors'])
+  if (
+    !isset($_REQUEST['cors']) || empty($_REQUEST['cors'])
   ) {
     echo json_encode(array("message" => "PROXY ACESS DENIED!, cors endpoint not specified"));
     exit();
   }
 
-  if ($_SERVER['REQUEST_METHOD'] != $_REQUEST['method']
+  if (
+    $_SERVER['REQUEST_METHOD'] != $_REQUEST['method']
   ) {
 
     echo json_encode(array("message" => "PROXY ACESS DENIED!, Request type and method must be the same"));
@@ -68,17 +71,17 @@ switch ($method) {
     /*@param
      unset cors and method POST values used by only this proxy and not needed by called API endpoint
     */
- if ($is_json_request == true) {
+    if ($is_json_request == true) {
       $post_keys_values = (array) $is_json_string_request;
       unset($post_keys_values['cors']);
       unset($post_keys_values['method']);
- }
- if ($is_raw_request == true) {
+    }
+    if ($is_raw_request == true) {
       $post_keys_values = $_POST;
       unset($post_keys_values['cors']);
       unset($post_keys_values['method']);
- }
-    
+    }
+
 
     //retrieve POST parameters
     $keys = "";
@@ -115,7 +118,7 @@ switch ($method) {
     break;
 
   case "GET":
-    
+
     /*@param
      unset cors and method GET values used by only this proxy and not needed by called API endpoint
     */
@@ -140,7 +143,7 @@ switch ($method) {
     $get_keys = explode('%%', $keys);
     $get_values = explode('%%', $values);
     $get_parameters = array_combine($get_keys, $get_values);
-    
+
     //prepare GET parameters
     if ($is_json_request == true) {
       $get_params = json_encode($get_parameters);
@@ -159,7 +162,7 @@ switch ($method) {
     break;
 
   default:
-  //you may copy code from POST block and put here if you need more request types and you know what you're doing
+    //you may copy code from POST block and put here if you need more request types and you know what you're doing
     echo json_encode("Proxy only allows POST and GET request");
 
 
@@ -183,8 +186,3 @@ if ($err) {
 
   echo $response;
 }
-
-
-
-
-
