@@ -71,12 +71,12 @@ switch ($method) {
     /*@param
      unset cors and method POST values used by only this proxy and not needed by called API endpoint
     */
-    if ($is_json_request == true) {
+    if (isset($is_json_request) && $is_json_request == true) {
       $post_keys_values = (array) $is_json_string_request;
       unset($post_keys_values['cors']);
       unset($post_keys_values['method']);
     }
-    if ($is_raw_request == true) {
+    if (isset($is_raw_request) && $is_raw_request == true) {
       $post_keys_values = $_POST;
       unset($post_keys_values['cors']);
       unset($post_keys_values['method']);
@@ -94,7 +94,7 @@ switch ($method) {
     $post_values = explode('%%', $values);
     $post_parameters = array_combine($post_keys, $post_values);
     //prepare POST parameters
-    if ($is_json_request == true) {
+    if (isset($is_json_request) && $is_json_request == true) {
       $post_parameters = json_encode($post_parameters);
     } else {
       $post_parameters = http_build_query($post_parameters);
@@ -122,12 +122,12 @@ switch ($method) {
     /*@param
      unset cors and method GET values used by only this proxy and not needed by called API endpoint
     */
-    if ($is_json_request == true) {
+    if (isset($is_json_request) && $is_json_request == true) {
       $get_keys_values = (array) $is_json_string_request;
       unset($get_keys_values['cors']);
       unset($get_keys_values['method']);
     }
-    if ($is_raw_request == true) {
+    if (isset($is_raw_request) && $is_raw_request == true) {
       $get_keys_values = $_GET;
       unset($get_keys_values['cors']);
       unset($get_keys_values['method']);
@@ -145,7 +145,7 @@ switch ($method) {
     $get_parameters = array_combine($get_keys, $get_values);
 
     //prepare GET parameters
-    if ($is_json_request == true) {
+    if (isset($is_json_request) && $is_json_request == true) {
       $get_params = json_encode($get_parameters);
     } else {
       $get_params = http_build_query($get_parameters);
@@ -177,12 +177,11 @@ $err      = curl_error($curl);
 curl_close($curl);
 
 if ($err) {
-  echo json_encode("curl error " . $err);
+  echo json_encode($err);
 } else {
   json_decode($response);
   if (json_last_error() === JSON_ERROR_NONE) {
     header('Content-Type: application/json');
   }
-
   echo $response;
 }
