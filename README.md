@@ -31,6 +31,29 @@ Since ```proxy.php``` is indepedent and light, just simply upload it to your ser
 
 });
  ```
+ You can also send your request as stringified data like this if the API endpoint is compatible with it or receives request that way
+ 
+ ```javascript
+ $.ajax({
+    url: "myserver/proxy.php",
+    type: "POST", //endpoint request type
+    crossDomain: true,
+    //set request header here if needed by endpoint
+    data: JSON.stringify({
+        "cors": "http://example-api.com/endpoint", //endpoint URL
+        "method": "POST", // should be the same with endpoint request type
+        //endpoint data comes
+        "param1": value, 
+        "param2": value
+    }),
+    success: function (data) {
+        console.log(data)
+    }
+
+});
+ ```
+ 
+ 
  Now you have made a clean cross domain request
  
  ### Note
