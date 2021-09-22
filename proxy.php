@@ -80,22 +80,26 @@ switch ($method) {
       $post_keys_values = $_POST;
       unset($post_keys_values['cors']);
       unset($post_keys_values['method']);
+
+      //retrieve POST parameters
+      $keys = "";
+      $values = "";
+      foreach ($post_keys_values as $key => $value) {
+        $keys .= $key . '%%';
+        $values .= $value . '%%';
+      };
+      $post_keys = explode('%%', $keys);
+      $post_values = explode('%%', $values);
+      $post_parameters = array_combine($post_keys, $post_values);
     }
 
 
-    //retrieve POST parameters
-    $keys = "";
-    $values = "";
-    foreach ($post_keys_values as $key => $value) {
-      $keys .= $key . '%%';
-      $values .= $value . '%%';
-    };
-    $post_keys = explode('%%', $keys);
-    $post_values = explode('%%', $values);
-    $post_parameters = array_combine($post_keys, $post_values);
+    
+
+
     //prepare POST parameters
     if (isset($is_json_request) && $is_json_request == true) {
-      $post_parameters = json_encode($post_parameters);
+      $post_parameters = json_encode($post_keys_values);
     } else {
       $post_parameters = http_build_query($post_parameters);
     }
@@ -131,22 +135,24 @@ switch ($method) {
       $get_keys_values = $_GET;
       unset($get_keys_values['cors']);
       unset($get_keys_values['method']);
+
+      //retrieve GET parameters
+      $keys = "";
+      $values = "";
+      foreach ($get_keys_values as $key => $value) {
+        $keys .= $key . '%%';
+        $values .= $value . '%%';
+      };
+      $get_keys = explode('%%', $keys);
+      $get_values = explode('%%', $values);
+      $get_parameters = array_combine($get_keys, $get_values);
     }
 
-    //retrieve GET parameters
-    $keys = "";
-    $values = "";
-    foreach ($get_keys_values as $key => $value) {
-      $keys .= $key . '%%';
-      $values .= $value . '%%';
-    };
-    $get_keys = explode('%%', $keys);
-    $get_values = explode('%%', $values);
-    $get_parameters = array_combine($get_keys, $get_values);
+    
 
     //prepare GET parameters
     if (isset($is_json_request) && $is_json_request == true) {
-      $get_params = json_encode($get_parameters);
+      $get_params = json_encode($get_keys_values);
     } else {
       $get_params = http_build_query($get_parameters);
     }
