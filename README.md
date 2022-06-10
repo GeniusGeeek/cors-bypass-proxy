@@ -57,7 +57,8 @@ Since ```proxy.php``` is indepedent and light, just simply upload it to your ser
  Now you have made a clean cross domain request
  
  ### Note
-You can add headers specified by the api endpoint or server you are trying to access, request type valid for proxy are POST and GET methods only, method and cors parameter are compulsory fields for the proxy to work, Request type and method parameter should be the same and should be the valid method for the API/server endpoint
+You can add headers specified by the api endpoint or server you are trying to access, request type valid for proxy are POST and GET methods only, method and cors parameter are compulsory fields for the proxy to work, Request type and method parameter should be the same and should be the valid method for the API/server endpoint.
+Tested PHP VERSION : 7.X
 
 
 
