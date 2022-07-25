@@ -6,6 +6,8 @@ A PHP proxy to solve client browser HTTP CORS(cross-origin) restrictions.
 A simple way to solve CORS issue when you have no access to the endpoint server is to have a proxy on your server, and this is just that, this may not take care of all security flaws but it does solve CORS issues.
 
 ## Installation
+  PHP version: 7.x
+
 Since ```proxy.php``` is indepedent and light, just simply upload it to your server
 
 
