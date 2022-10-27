@@ -10,6 +10,19 @@ A simple way to solve CORS issue when you have no access to the endpoint server 
 
 Since ```proxy.php``` is indepedent and light, just simply upload it to your server
 
+## Usage
+Make a HTTP POST request to the proxy with your preferred framework/language, set headers required by the original endpoint if needed
+
+```bash
+    {
+        "cors": "http://example-api.com/endpoint", //endpoint URL
+        "method": "POST", // should be the same with endpoint request type
+        //endpoint data comes
+        "param1": value, 
+        "param2": value
+    }
+    
+```
 
 
  ## Usage with Jquery
