@@ -169,7 +169,7 @@ switch ($method) {
 
   default:
     //you may copy code from POST block and put here if you need more request types and you know what you're doing
-    echo json_encode("Proxy only allows POST and GET request");
+    echo json_encode(array("message" => "Proxy only allows POST and GET request"));
 
 
     exit();
