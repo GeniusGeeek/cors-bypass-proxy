@@ -14,6 +14,10 @@ Since ```proxy.php``` is indepedent and light, just simply upload it to your ser
 Make a HTTP POST request to the proxy with your preferred framework/language, set headers required by the original endpoint if needed
 
 ```bash
+  --Headers--
+  example: Content-type: "appliciation/json"
+  --data-body--
+  example:
     {
         "cors": "http://example-api.com/endpoint", //endpoint URL
         "method": "POST", // should be the same with endpoint request type
