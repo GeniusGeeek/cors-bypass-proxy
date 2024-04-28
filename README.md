@@ -27,7 +27,8 @@ Make a HTTP POST request to the proxy with your preferred framework/language, se
     }
     
 ```
-## usage with nativ JS and fethc
+## usage with native JS and fetch
+
 
 ```javascript
 var url = "myserver/proxy.php";
@@ -60,6 +61,29 @@ fetch(url, {
 });
 ```
 
+```javascript
+var xhr = new XMLHttpRequest();
+var url = "myserver/proxy.php";
+var params = JSON.stringify({
+    "cors": "http://example-api.com/endpoint",
+    "method": "POST",
+    "param1": value,
+    "param2": value
+});
+
+xhr.open("POST", url, true);
+xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        var data = JSON.parse(xhr.responseText);
+        console.log(data);
+    }
+};
+
+xhr.send(params);
+
+
+```
  ## Usage with Jquery
  
  ```javascript
